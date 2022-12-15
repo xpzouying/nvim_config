@@ -58,10 +58,15 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  pattern = { "*.go" },
+
+-- refs: http://neovimcraft.com/plugin/ray-x/go.nvim/index.html
+local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
   callback = function()
-    -- vim.lsp.buf.formatting()
-    vim.lsp.buf.format { async = true }
+   require('go.format').goimport()
   end,
+  group = format_sync_grp,
 })
+
+
