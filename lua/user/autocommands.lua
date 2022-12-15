@@ -58,3 +58,10 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	end,
 })
 
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  pattern = { "*.go" },
+  callback = function()
+    -- vim.lsp.buf.formatting()
+    vim.lsp.buf.format { async = true }
+  end,
+})
